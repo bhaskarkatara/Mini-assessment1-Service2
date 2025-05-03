@@ -7,10 +7,8 @@ import com.example.Mini_assessment_userService.userService.UserService;
 import com.example.Mini_assessment_userService.utils.jwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.Optional;
 
@@ -31,7 +29,7 @@ public class UserController {
 
     @GetMapping("/profile")
     public ResponseEntity<?> getProfile(@RequestHeader("Authorization") String tokenHeader) {
-        return userService.check(tokenHeader); // directly return the error response
+        return userService.check(tokenHeader);
     }
 
     @PutMapping("/update")
@@ -41,7 +39,7 @@ public class UserController {
         HttpStatus status = (HttpStatus) checkResponse.getStatusCode();
 
         if (status == HttpStatus.BAD_REQUEST || status == HttpStatus.UNAUTHORIZED) {
-            return checkResponse; // directly return the error response
+            return checkResponse;
         }
 
         @SuppressWarnings("unchecked")
