@@ -1,5 +1,6 @@
 package com.example.Mini_assessment_userService.userService;
 
+import com.example.Mini_assessment_userService.dataClass.ApiResponse;
 import com.example.Mini_assessment_userService.dataClass.User;
 import com.example.Mini_assessment_userService.repo.UserRepo;
 import com.example.Mini_assessment_userService.utils.jwtUtils;
@@ -30,14 +31,15 @@ public class UserService {
 
     public ResponseEntity<?> check(String tokenHeader) {
         if (tokenHeader == null || !tokenHeader.startsWith("Bearer ")) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Missing token");
+            return ResponseEntity.ok(new ApiResponse<>(false,"Missing token",null));
         }
         String token = tokenHeader.substring(7);
         if (JwtUtils.validateToken(token)) {
             String email = JwtUtils.extractEmail(token);
             Optional<User> currentUserDetails = findByEmail(email);
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(currentUserDetails);
+
+            return ResponseEntity.ok(new ApiResponse<>(true,"Profile loaded",currentUserDetails));
         }
-         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("token is null or invalidate");
+         return ResponseEntity.ok(new ApiResponse<>(false,"token is null or invalidate",null));
     }
 }

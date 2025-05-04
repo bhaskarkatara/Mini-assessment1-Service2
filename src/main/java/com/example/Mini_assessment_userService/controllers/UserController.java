@@ -1,5 +1,6 @@
 package com.example.Mini_assessment_userService.controllers;
 
+import com.example.Mini_assessment_userService.dataClass.ApiResponse;
 import com.example.Mini_assessment_userService.dataClass.User;
 import com.example.Mini_assessment_userService.dataClass.userUpdateDetails;
 import com.example.Mini_assessment_userService.passwordUtils.passwordUtils;
@@ -47,7 +48,7 @@ public class UserController {
 
 
         if (optionalUser.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+             return ResponseEntity.ok(new ApiResponse<>(false,"User not found",null));
         }
 
         User existingUser = optionalUser.get();
@@ -58,8 +59,8 @@ public class UserController {
         existingUser.setPassword(hashPassword);
 
         userService.save(existingUser);
+        return ResponseEntity.ok(new ApiResponse<>(true,"user profile updated",existingUser));
 
-        return ResponseEntity.ok(existingUser);
     }
 
 }
