@@ -1,0 +1,5 @@
+spring.application.name=Mini-assessment-userService
+server.port = PORT_NUMBER
+spring.data.mongodb.uri= MONGO_DB_URI
+spring.data.mongodb.database= DB_NAME
+spring.secret.key= YOUR_SECRET_KEY
